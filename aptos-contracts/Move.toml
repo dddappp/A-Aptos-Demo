@@ -1,0 +1,9 @@
+[package]
+name = "AptosTestProj1"
+version = "0.0.1"
+
+[addresses]
+aptos_test_proj1 = "_"
+
+[dependencies]
+AptosFramework = { git = "https://github.com/aptos-labs/aptos-core.git", subdir = "aptos-move/framework/aptos-framework", rev = "aptos-cli-v1.0.11" }
