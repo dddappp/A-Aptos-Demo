@@ -103,7 +103,7 @@ wubuku/dddappp-aptos:0.0.1 \
 
 #### 关于生成的链上合约代码
 
-需要注意的时，目前生成的代码，是将聚合根实体（比如 Order 聚合的那个 Order，即订单实体）的状态保存在 一个 Table 中的。
+需要注意的是，目前生成的链上合约代码，是将聚合根实体（比如 Order 聚合的那个 Order，即订单实体）的状态保存在 一个 Table 中的。
 
 ### 实现业务逻辑
 
@@ -185,7 +185,7 @@ aptos move run --function-id 'default::aptos_demo_init::initialize' --assume-yes
 
 ### TODO 链下 Java 服务 `aptos-java-service` 
 
-运行链下 Java 服务需要的设置配置项：
+运行链下 Java 服务需要设置的配置项：
 
 * 合约部署的地址。注意，目前合约部署并调用初始化方法后，会生成一个资源账户。
 
@@ -194,7 +194,7 @@ aptos move run --function-id 'default::aptos_demo_init::initialize' --assume-yes
 链下 Java 服务依赖的 Aptos Node API 接口：
 
 * [Get events by event handle](https://fullnode.devnet.aptoslabs.com/v1/spec#/operations/get_events_by_event_handle)。通过这个接口，获取资源账户的创建信息，各种领域事件信息等。
-* [Get account resource](https://fullnode.devnet.aptoslabs.com/v1/spec#/operations/get_account_resource)。通过这个接口获取账户下的资源信息。Table 的 handle 信息需要使用这个接口来获取。
+* [Get account resource](https://fullnode.devnet.aptoslabs.com/v1/spec#/operations/get_account_resource)。通过这个接口获取账户下的资源信息。保存聚合根状态的 Table 的 handle 需要使用这个接口来获取。
 * [Get table item](https://fullnode.devnet.aptoslabs.com/v1/spec#/operations/get_table_item)。通过这个接口，获取聚合根实体（比如 Order 聚合的那个订单实体）以及聚合内部实体（比如 Order 聚合的 OrderItem，即订单项实体）的状态。
 
 ## 一些提示
