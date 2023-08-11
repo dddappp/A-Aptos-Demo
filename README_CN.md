@@ -51,6 +51,21 @@ sudo docker run -p 3306:3306 --name mysql \
 
 ### 运行 dddappp 项目创建工具
 
+#### 更新 dddappp Docker 镜像
+
+由于 dddappp v0.0.1 映像经常更新，您可能需要手动删除该映像，然后在 `docker run` 前重新调用。
+
+```shell
+# 如果已经运行过，可能需要先清理退出的 Docker 容器
+docker rm $(docker ps -aq --filter "ancestor=wubuku/dddappp-aptos:0.0.1")
+# 删除镜像
+docker image rm wubuku/dddappp-aptos:0.0.1
+# 拉取镜像
+git pull wubuku/dddappp-aptos:0.0.1
+```
+
+---
+
 使用 Docker 运行项目创建工具：
 
 ```shell
@@ -170,15 +185,14 @@ aptos move run --function-id 'default::aptos_demo_init::initialize' --assume-yes
 
 ### 链下 Java 服务 `aptos-java-service` 
 
-运行链下 Java 服务需要设置的配置项：
+现在运行 dddappp 工具后，会在目录 `aptos-java-service` 中生成一个链下服务项目。
+它可以将链上的应用事件和实体状态拉取到链下数据库，并提供查询 API。
 
-* 合约部署的地址。注意，目前合约部署并调用初始化方法后，会生成一个资源账户。
-
-* 使用的网络的 Node API 的 BaseURL（废话）。
+你可以参考这个例子来配置生成的链下服务：https://github.com/dddappp/aptos-blog-example#test-off-chain-service
 
 [TBD]
 
-#### 链下 Java 服务依赖的 Aptos Node API 接口
+#### 关于链下 Java 服务使用的 Aptos Node API 接口
 
 链下 Java 服务依赖的 Aptos Node API 接口包括：
 

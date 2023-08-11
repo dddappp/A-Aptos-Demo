@@ -51,6 +51,21 @@ In these models, some of the fabricated examples may have become a bit "absurdly
 
 ### Run dddappp Project Creation Tool
 
+#### Update dddappp Docker Image
+
+Since the dddappp v0.0.1 image is updated frequently, you may be required to manually delete the image and pull it again before `docker run`.
+
+```shell
+# If you have already run it, you may need to Clean Up Exited Docker Containers first
+docker rm $(docker ps -aq --filter "ancestor=wubuku/dddappp-aptos:0.0.1")
+# remove the image
+docker image rm wubuku/dddappp-aptos:0.0.1
+# pull the image
+git pull wubuku/dddappp-aptos:0.0.1
+```
+
+---
+
 Use Docker to run the project creation tool:
 
 ```shell
@@ -165,15 +180,14 @@ aptos move publish --named-addresses aptos_test_proj1=default
 
 ### Off-chain Java Service `aptos-java-service`
 
-The configuration items that need to be set to run the off-chain Java service:
+Now after running the dddappp tool, it will generate an off-chain service project in the directory `aptos-java-service`.
+It can pull application events and entity states on the chain into the off-chain database, and provides query APIs.
 
-* The address where the contract is deployed. Note that currently, after deploying and calling the initialization method of the contract, a resource account will be generated.
-
-* The BaseURL of the Node API of the network used.
+You can refer to this example to configure the generated off-chain service: https://github.com/dddappp/aptos-blog-example#test-off-chain-service
 
 [TBD]
 
-####  Aptos Node APIs that the off-chain Java service depends on
+####  About Aptos Node APIs Used by the off-chain Java service
 
 The Aptos Node API interfaces that the off-chain Java service depends on:
 
