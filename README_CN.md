@@ -14,9 +14,9 @@
 
 * 安装 [Docker](https://docs.docker.com/engine/install/)。
 
-* ~~安装 MySQL 数据库。👈由于目前链下服务的生成还在开发中，所以你可以先忽略掉这一步。~~
+* 安装 MySQL 数据库。
 
-* ~~安装 JDK 和 Maven。工具目前生成的链下服务使用 Java 语言。👈由于目前链下服务的生成还在开发中，所以你可以先忽略掉这一步。~~
+* 安装 JDK 和 Maven。工具目前生成的链下服务使用 Java 语言。
 
 如果你已经安装了 Docker，可以使用 Docker 来运行一个 MySQL 数据库服务。比如：
 
@@ -32,11 +32,11 @@ sudo docker run -p 3306:3306 --name mysql \
 
 ## 示例：重现 Demo 应用的开发过程
 
-我们在 GitHub 上放置了一个使用 dddappp 低代码工具开发的 Demo 应用。这个应用的代码分为两部分（TODO `aptos-java-service`...）：
+我们在 GitHub 上放置了一个使用 dddappp 低代码工具开发的 Demo 应用。这个应用的代码分为两部分：
 
 * Aptos Move 链上合约：https://github.com/wubuku/Dapp-LCDP-Demo/tree/main/aptos_contracts
 
-* ~~Java 链下服务：https://github.com/wubuku/Dapp-LCDP-Demo/tree/main/aptos-java-service~~
+* Java 链下服务：https://github.com/wubuku/Dapp-LCDP-Demo/tree/main/aptos-java-service
 
 你可以按照下面的介绍重现该 Demo 的开发过程。
 
@@ -81,13 +81,11 @@ wubuku/dddappp-aptos:0.0.1 \
 * `pomGroupId` 链下服务的 `GroupId`，我们使用 Maven 作为链下服务的项目管理工具。它应该全小写、各部分以点号分隔。
 * `aptosMoveProjectDirectoryPath` 是放置链上 Aptos 合约代码的目录路径。它应该使用容器内可以读写的目录路径。
 
-上面的命令执行成功后，在本地目录 `/PATH/TO/test` 下应该会增加一个目录 `aptos-contracts`。
+上面的命令执行成功后，在本地目录 `/PATH/TO/test` 下应该会增加两个目录 `aptos-contracts` 以及 `aptos-java-service`。
 
-~~（TODO `aptos-java-service`...）~~
+此时可以尝试编译链下服务。进入目录 `aptos-java-service`，执行：`mvn compile`
 
-~~此时可以尝试编译链下服务。进入目录 `aptos-java-service`，执行：`mvn compile`~~
-
-~~如果没有意外，编译应该可以成功。~~
+如果没有意外，编译应该可以成功。
 
 此时，链上合约还不能通过编译，因为“业务逻辑”还没有实现。下面我们就来实现它们。
 
@@ -170,17 +168,19 @@ aptos move publish --named-addresses aptos_test_proj1=default
 aptos move run --function-id 'default::aptos_demo_init::initialize' --assume-yes
 ```
 
+### 链下 Java 服务 `aptos-java-service` 
+
+运行链下 Java 服务需要设置的配置项：
+
+* 合约部署的地址。注意，目前合约部署并调用初始化方法后，会生成一个资源账户。
+
+* 使用的网络的 Node API 的 BaseURL（废话）。
+
 [TBD]
 
-### TODO 链下 Java 服务 `aptos-java-service` 
+#### 链下 Java 服务依赖的 Aptos Node API 接口
 
-~~运行链下 Java 服务需要设置的配置项：~~
-
-~~* 合约部署的地址。注意，目前合约部署并调用初始化方法后，会生成一个资源账户。~~
-
-~~* 使用的网络的 Node API 的 BaseURL（废话）。~~
-
-~~链下 Java 服务依赖的 Aptos Node API 接口：~~
+链下 Java 服务依赖的 Aptos Node API 接口包括：
 
 * [Get events by event handle](https://fullnode.devnet.aptoslabs.com/v1/spec#/operations/get_events_by_event_handle)。通过这个接口，获取资源账户的创建信息，各种领域事件信息等。
 * [Get account resource](https://fullnode.devnet.aptoslabs.com/v1/spec#/operations/get_account_resource)。通过这个接口获取账户下的资源信息。保存聚合根状态的 Table 的 handle 需要使用这个接口来获取。
