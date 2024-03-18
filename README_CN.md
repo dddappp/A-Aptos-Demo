@@ -61,7 +61,7 @@ docker rm $(docker ps -aq --filter "ancestor=wubuku/dddappp-aptos:0.0.1")
 # 删除镜像
 docker image rm wubuku/dddappp-aptos:0.0.1
 # 拉取镜像
-git pull wubuku/dddappp-aptos:0.0.1
+docker pull wubuku/dddappp-aptos:0.0.1
 ```
 
 ---
